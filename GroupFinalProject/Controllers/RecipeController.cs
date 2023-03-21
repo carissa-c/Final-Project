@@ -21,32 +21,84 @@ namespace GroupFinalProject.Controllers
         }
 
         [HttpGet("{userid}")]
-        public List<Recipe> getRecipeByUserId(string userid)
+        public List<Favorite> getRecipeByUserId(string userid)
         {
-            return context.Recipes.Where(r => r.UserId == userid).ToList();
+            return context.Favorites.Where(r => r.UserId == userid).ToList();
         }
 
         [HttpPost]
-        public Recipe AddRecipe(int recipeid, string userid)
+        public Recipe AddRecipe(int recipeid, string recipeTitle, string img, string sourceUrl, int readyInMinutes, int servings)
         {
-            Recipe newRecipe = new Recipe()
+            if (context.Recipes.Count(r => r.RecipeId == recipeid) == 0)
             {
-                RecipeId = recipeid,
-                UserId = userid
-            };
-            context.Recipes.Add(newRecipe);
-            context.SaveChanges();
-            return newRecipe;
+                Recipe newRecipe = new Recipe()
+                {
+                    RecipeId = recipeid,
+                    RecipeTitle = recipeTitle,
+                    Image = img,
+                    SourceUrl = sourceUrl,
+                    ReadyInMinutes = readyInMinutes,
+                    Servings = servings
+                };
+                context.Recipes.Add(newRecipe);
+                context.SaveChanges();
+                return newRecipe;
+            }
+            else
+            {
+                return context.Recipes.FirstOrDefault(r => r.RecipeId == recipeid);
+            }
         }
 
         [HttpDelete]
         public Recipe DeleteRecipe(int id)
         {
+
             Recipe recipe = context.Recipes.FirstOrDefault(r => r.Id == id);
             context.Recipes.Remove(recipe);
             context.SaveChanges();
             return recipe;
         }
+
+        [HttpPost("addFavorite")]
+        public Favorite addFavorite(int recipeId,string userid)
+        {
+            Favorite newFavorite = new Favorite()
+            {
+                RecipeId = recipeId,
+                UserId = userid
+            };
+            context.Favorites.Add(newFavorite);
+            context.SaveChanges();
+            return newFavorite;
+        }
+
+
+
+        [HttpDelete("deleteFavorite")]
+        public void deleteFavorite(int recipeId,string userid)
+        {
+            Favorite f = context.Favorites.FirstOrDefault(q=>q.RecipeId== recipeId && q.UserId == userid);
+            context.Favorites.Remove(f);
+            context.SaveChanges();
+            
+        }
+
+        [HttpGet("getFavorite")]
+        public List<Recipe> getFavorites(string userid)
+        {
+            List<Favorite> favList = new List<Favorite>();
+            favList = context.Favorites.Where(f => f.UserId== userid).ToList();
+            bool idExist = favList.Any();
+            List<Recipe> newRs = new List<Recipe>();
+            foreach(Favorite f in favList)
+            {
+                newRs.Add(context.Recipes.FirstOrDefault(r => r.RecipeId== f.RecipeId));
+            }
+            return newRs;
+        }
+
+
     }
 }
 

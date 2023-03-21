@@ -12,6 +12,8 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { RecipesComponent } from './Components/recipes/recipes.component';
 import { MealsComponent } from './Components/meals/meals.component';
+import { NutritiondetailComponent } from './Components/nutritiondetail/nutritiondetail.component';
+import { Secret } from './Models/secret';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { MealsComponent } from './Components/meals/meals.component';
     CounterComponent,
     FetchDataComponent,
     RecipesComponent,
-    MealsComponent
+    MealsComponent,
+    NutritiondetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,7 +35,9 @@ import { MealsComponent } from './Components/meals/meals.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'meals', component: MealsComponent}
+      { path: 'meals', component: MealsComponent},
+      { path: 'meals/:id', component: MealsComponent},
+      {path: 'favorites', component:RecipesComponent}
     ])
   ],
   providers: [
@@ -44,7 +49,7 @@ import { MealsComponent } from './Components/meals/meals.component';
       	  {
       	    id: GoogleLoginProvider.PROVIDER_ID,
       	    provider: new GoogleLoginProvider(
-      	      '311521076002-5cg2nuht56tpvl0eh36sv8aru36hp3uo'
+      	      Secret.clientId
       	    )
       	  }
       	]
