@@ -1,1 +1,7 @@
-<p>recipes works!</p>
+
+<div *ngFor="let r of Recipes">
+    <h2>{{r.recipeTitle}}</h2>
+    <img src="https://spoonacular.com/recipeImages/{{r.recipeId}}-312x150.jpg"/>
+    <p>Ready in Minutes: {{r.readyInMinutes}}</p>
+    <p>Servings: {{r.servings}}</p>
+</div>
