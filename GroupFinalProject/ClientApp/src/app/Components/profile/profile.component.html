@@ -1,0 +1,58 @@
+
+<!-- profile detail if exists -->
+<div *ngIf="doesProfileExist">
+    <p>User: {{user.firstName}} {{user.lastName}}</p>
+    <p>Height: {{ heightMath() }}</p>
+    <p>Weight: {{userProfile.weight}} lbs</p>
+    <p>Goal: {{userProfile.goal}}</p>
+</div>
+
+<!--link to favorites-->
+<div class="card text-end" style="width: 15rem;">
+    <div class="card-body">
+      <h5 class="card-title">Meals You've Liked</h5>
+      <p class="card-text">Check out the meals you've enjoyed or haven't tried yet!</p>
+      <a href="#" class="btn btn-success" routerLink="/favorites">Favorite Meals</a>
+    </div>
+</div>
+
+<!-- update profile buttons -->
+    <button (click)="toggleUpdateForm()">Update Profile</button>
+    <button (click)="deleteProfile()">Delete Profile</button>
+
+<!-- update profile form if user profile exists -->
+<div *ngIf="revealUpdateForm">
+    <p>Enter Weight (lbs)</p>
+    <input type="number" [(ngModel)]="userProfile.weight" id="weight" name="weight">
+    <p>Enter Goal</p>
+    <select [(ngModel)]="userProfile.goal" id="goal" name="goal">    
+      <option value="lose weight">Lose Weight</option>
+      <option value="gain weight">Gain Weight</option>
+      <option value="maintain weight">Maintain Weight</option>
+    </select>
+
+    <button (click)="updateProfile()" (click)="revealUpdateForm=false">update Profile</button>
+</div>
+
+<!-- new profile form-->
+<div *ngIf="!doesProfileExist">
+    <p>Enter Height (in inches)</p>
+    <input type="number" [(ngModel)]="userProfile.height" id="height" name="height">
+    <p>Enter Weight (in pounds)</p>
+    <input type="number" [(ngModel)]="userProfile.weight" id="weight" name="weight">
+    <p>Enter Goal</p>
+    <select [(ngModel)]="userProfile.goal" id="goal" name="goal">
+      <option value="lose weight">Lose Weight</option>
+      <option value="gain weight">Gain Weight</option>
+      <option value="maintain weight">Maintain Weight</option>
+    </select>
+    <button (click)="addProfile()" (click)="toggleAddedUser()">Add Profile</button>
+
+
+<!-- profile creation feedback -->
+    <div *ngIf="wasProfileCreated">
+    <h1>{{user.firstName}}'s Profile was added!</h1>
+    </div>
+</div>
+
+

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class CounterComponent {
   user: SocialUser = {} as SocialUser;
   loggedIn: boolean = false;
+
   constructor(private authService: SocialAuthService, private router:Router) {}
 
   ngOnInit(): void {
@@ -25,6 +26,7 @@ export class CounterComponent {
   public currentCount = 0;
 
   public incrementCounter() {
-    this.currentCount++;
+    this.currentCount+= 10000;
   }
+
 }

@@ -1,0 +1,91 @@
+<!--daily meals-->
+<h1 class="text-center">{{user.name}}'s Meal Plan</h1>
+<h4 class="text-center">Select Date: <input type="date" [(ngModel)]="selectedDate"></h4>
+<br>
+<!-- <input type="date" [(ngModel)]="selectedDate"> -->
+<h1 *ngIf="matchingMeals().length==0">No meals on this day.</h1>
+
+<!--grid cards-->
+
+<div class="row">
+  <div *ngFor="let m of matchingMeals(); index as i" class="row col-sm-6 mb-4">
+      <div class="col">
+          <div class="card">
+              <img src={{m.recipe.image}} class="card-img-top">
+              <div class="card-body">
+                  <h1 class="card-title" class="text-center">{{m.recipe.recipeTitle}}</h1>
+                  <h4 class="card-text" class="text-center">Calories: {{m.recipe.totalCalories}}</h4><p class="text-center">per serving ({{m.recipe.servings}})</p>
+                  <p><b>Goal:</b> {{userProfile.goal}}</p>
+                  <p><b>Plan:</b> {{ mealQuota(m.recipe.totalCalories) }}</p>
+                  <br>
+                  <p *ngIf="m.recipe.ingredients!=null">{{stringConverterIngredients(m.recipe.ingredients)}}</p>
+            <strong class="btn btn-outline-success" *ngIf="m.recipe.ingredients!=null" (click)="toggleIngredients(i)">See Ingredients</strong>
+            <!-- <button *ngIf="m.ingredients!=null" (click)="toggleIngredients(i)">see ingredients</button> -->
+            <div *ngIf="displaysIngredients[i]" class="text-center">
+                <div *ngFor="let ing of ingredientsArray">
+                    <div>{{ing}}</div>
+                </div>
+            </div>
+            <p *ngIf="m.recipe.instructions!=null">{{stringConverterInstructions(m.recipe.instructions)}}</p>
+            <p *ngIf="m.recipe.instructions==null">No instructions available.  See {{m.recipe.sourceUrl}}</p>
+            <strong *ngIf="m.recipe.instructions!=null" class="btn btn-outline-dark" (click)="toggleInstructions(i)">See Instructions</strong>
+            <div *ngIf="displaysInstructions[i]">
+                <div *ngFor="let inst of instructionsArray; index as p">
+                    <p>{{p+1}}. {{inst}}</p>
+                </div>
+            </div>
+            <br><br>
+              <strong class="btn btn-outline-danger" (click)="deleteMealPlan(m.id)">Remove Meal</strong>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+<!--grid cards-->
+<!-- <div class="row">
+    <div *ngFor="let m of matchingMeals(); index as i" class="row col-sm-4 mb-4">
+        <div class="col">
+            <div class="card">
+                <img src={{m.recipe.image}} class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{m.recipe.recipeTitle}}</h5>
+                    <h6>{{m.recipe.dishTypes}}</h6>
+                    <p class="card-text">calories: {{m.recipe.totalCalories}}</p>
+                    <p *ngIf="m.recipe.ingredients!=null">{{stringConverterIngredients(m.recipe.ingredients)}}</p>
+                    <button *ngIf="m.recipe.ingredients!=null" (click)="toggleIngredients(i)">see ingredients</button>
+                    <div *ngIf="displaysIngredients[i]">
+                        <ul *ngFor="let ing of ingredientsArray">
+                            <li>{{ing}}</li>
+                        </ul>
+                    </div>
+                    <p *ngIf="m.recipe.instructions!=null">{{stringConverterInstructions(m.recipe.instructions)}}</p>
+                    <p *ngIf="m.recipe.instructions==null">No instructions available.  See {{m.recipe.sourceUrl}}</p>
+                    <button *ngIf="m.recipe.instructions!=null" (click)="toggleInstructions(i)">see instructions</button>
+                    <div *ngIf="displaysInstructions[i]">
+                        <div *ngFor="let inst of instructionsArray; index as p">
+                            <p>{{p+1}}. {{inst}}</p>
+                        </div>
+                    </div> -->
+                    <!-- <p>{{m.ingredients}}</p> -->
+                    <!-- <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    <p>{{m.ingredients}}</p></button> -->
+                <!-- <button (click)="deleteMealPlan(m.id)">Remove Meal</button>
+                </div>
+            </div>
+            <p *ngIf="m.instructions!=null">{{stringConverterInstructions(m.instructions)}}</p>
+            <p *ngIf="m.instructions==null">No instructions available.  See {{m.sourceUrl}}</p>
+            <button *ngIf="m.instructions!=null" (click)="toggleInstructions(i)">see instructions</button>
+            <div *ngIf="displaysInstructions[i]">
+                <div *ngFor="let inst of instructionsArray; index as p">
+                    <p>{{p+1}}. {{inst}}</p>
+                </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div> -->
+
+   

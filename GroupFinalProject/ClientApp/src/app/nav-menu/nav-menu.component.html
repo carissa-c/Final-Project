@@ -1,9 +1,8 @@
 <header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Meal Match</a>
+  <img src="http://dmexco-koeln-nrw.de/wp-content/uploads/2017/08/logo_mealmatch-768x576.png" height="80">
+  <a class="navbar-brand" [routerLink]="['/']">Meal Match</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -11,14 +10,12 @@
         data-target=".navbar-collapse"
         aria-label="Toggle navigation"
         [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
+        (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
         [ngClass]="{ show: isExpanded }"
-      >
+        >
         <ul class="navbar-nav flex-grow">
           <li
             class="nav-item"
@@ -27,38 +24,45 @@
           >
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="loggedIn">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="loggedIn">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
+        <!-- Donation parody -->
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+             <a class="nav-link text-dark" [routerLink]="['/counter']"
+                        >Donate</a
+                      >
+            </li>
+
+                     <!-- Meals link -->
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/meals']"
               >Meals</a
             >
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <!-- Favorites link -->
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="loggedIn">
             <a class="nav-link text-dark" [routerLink]="['/favorites']"
               >Favorites</a
             >
           </li>
-            <li class="nav-item">
-              <asl-google-signin-button *ngIf="!loggedIn" type='icon' size='medium'></asl-google-signin-button>
-              <button class="btn btn-outline-dark" *ngIf="loggedIn"  (click)="signOut()">Sign Out
-              </button>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="loggedIn">
+            <a class="nav-link text-dark" [routerLink]="['/mealplan']"
+              >Meal Plan</a
+            >
+          </li>
+
+          <!-- User icon link to profile page -->
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="loggedIn">
+            <a class="nav-link text-dark" [routerLink]="['/profile']"
+              ><img src="{{ user.photoUrl }}" height="50"/></a
+            >
+          </li>
+          <!-- Google sign out -->
+              <li class="nav-item">
+                <asl-google-signin-button *ngIf="!loggedIn" type='icon' size='medium'></asl-google-signin-button>
+                <button class="btn btn-outline-dark" *ngIf="loggedIn"  (click)="signOut()">Sign Out
+                </button>
           </li> 
-              <!--user name/photo display when logged in-->
-              <div *ngIf="loggedIn">
-                <p>{{ user.name }}</p>
-                <img src="{{ user.photoUrl }}"/>
-              </div>
-             
-          
+          <!-- <li *ngIf="loggedIn">{{ user.name }}</li> -->
+
         </ul>
       </div>
     </div>

@@ -17,6 +17,10 @@ public partial class MealmatchContext : DbContext
 
     public virtual DbSet<Favorite> Favorites { get; set; }
 
+    public virtual DbSet<MealPlan> MealPlans { get; set; }
+
+    public virtual DbSet<Profile> Profiles { get; set; }
+
     public virtual DbSet<Recipe> Recipes { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,11 +33,34 @@ public partial class MealmatchContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Favorite__3214EC07425EDFDB");
 
-            entity.Property(e => e.UserId).HasMaxLength(255);
-
             entity.HasOne(d => d.Recipe).WithMany(p => p.Favorites)
                 .HasForeignKey(d => d.RecipeId)
                 .HasConstraintName("FK__Favorites__Recip__5EBF139D");
+        });
+
+        modelBuilder.Entity<MealPlan>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__MealPlan__3214EC073F82EBCE");
+
+            entity.ToTable("MealPlan");
+
+            entity.Property(e => e.Date).HasColumnType("date");
+
+            entity.HasOne(d => d.Recipe).WithMany(p => p.MealPlans)
+                .HasForeignKey(d => d.RecipeId)
+                .HasConstraintName("FK__MealPlan__Recipe__6383C8BA");
+        });
+
+        modelBuilder.Entity<Profile>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Profile__3213E83F20CC1D27");
+
+            entity.ToTable("Profile");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Goal).HasMaxLength(300);
+            entity.Property(e => e.Height).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.Weight).HasColumnType("decimal(18, 0)");
         });
 
         modelBuilder.Entity<Recipe>(entity =>
@@ -41,6 +68,8 @@ public partial class MealmatchContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Recipe__3214EC07137EE07C");
 
             entity.ToTable("Recipe");
+
+            entity.Property(e => e.TotalCalories).HasColumnType("decimal(18, 0)");
         });
 
         OnModelCreatingPartial(modelBuilder);

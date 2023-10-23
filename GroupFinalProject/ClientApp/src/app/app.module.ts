@@ -4,16 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
-
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { RecipesComponent } from './Components/recipes/recipes.component';
+import { FavoritesComponent } from './Components/favorites/favorites.component';
 import { MealsComponent } from './Components/meals/meals.component';
-import { NutritiondetailComponent } from './Components/nutritiondetail/nutritiondetail.component';
 import { Secret } from './Models/secret';
+import { ProfileComponent } from './Components/profile/profile.component';
+import { MealplanComponent } from './Components/mealplan/mealplan.component';
 
 @NgModule({
   declarations: [
@@ -21,10 +20,10 @@ import { Secret } from './Models/secret';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
-    RecipesComponent,
+    FavoritesComponent,
     MealsComponent,
-    NutritiondetailComponent
+    ProfileComponent,
+    MealplanComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,10 +33,11 @@ import { Secret } from './Models/secret';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
       { path: 'meals', component: MealsComponent},
       { path: 'meals/:id', component: MealsComponent},
-      {path: 'favorites', component:RecipesComponent}
+      {path: 'favorites', component:FavoritesComponent},
+      {path: 'profile', component:ProfileComponent},
+      {path: 'mealplan', component:MealplanComponent}
     ])
   ],
   providers: [

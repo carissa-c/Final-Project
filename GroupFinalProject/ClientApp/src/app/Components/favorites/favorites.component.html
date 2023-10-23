@@ -1,0 +1,41 @@
+<h1 class="text-center" *ngIf="loggedIn">{{ user.name }}'s Favorite Meals</h1>
+<br>
+<div class="row">
+    <!-- <div *ngFor="let r of Recipes; index as i" class="row row-cols-1 row-cols-md-2 g-4"> -->
+    <div *ngFor="let r of Recipes; index as i" class="row col-sm-4 mb-4">
+        <div class="col">
+            <div class="card">
+                <img src="https://spoonacular.com/recipeImages/{{r.recipeId}}-312x150.jpg" class="card-img-top">
+                <div class="card-body">
+                    <h4 class="card-title" class="text-center"><b>{{r.recipeTitle}}</b></h4>
+                    <br>
+                    <p class="card-text"><b>Cook Time:</b> {{r.readyInMinutes}} Minutes</p>
+                    <p><b>Calories:</b> {{r.totalCalories}}</p>
+                    <p><b>Servings:</b> {{r.servings}}</p>
+                    <p><b>Goal:</b> {{userProfile.goal}}</p>
+                    <p><b>Plan:</b> {{ mealQuota(r.totalCalories) }}</p>
+                    <br>
+                    <div *ngIf="userProfile.goal">
+                    <strong (click)="toggleDate(i)" class="btn btn-secondary">Add to Meal Plan</strong>
+                        <div *ngIf="displayDate[i]" >
+                            <br>
+                            <p>Select Date:</p>
+                            <input type="date" [(ngModel)]="date">
+                            <br><br>
+                            <strong (click)="addMealPlan(r.id)" (click)="toggleConfirm(i)" class="btn btn-dark">Confirm</strong>
+                            <br>
+                        </div>
+                        <br><br>
+                        <div *ngIf="mealPlanConfirm[i]">
+                            <h4><b><i>{{r.recipeTitle}}</i></b> has been added to your meal plan! Visit: <a [routerLink]="['/mealplan']">Meal Plan</a></h4>
+                        </div>
+                        <div *ngIf="invalidDate[i]">
+                            <h4>Invalid date.  Please try again</h4>
+                        </div>
+                        <strong class="btn btn-outline-danger" (click)="deleteFavorite(r.id)">Remove Favorite</strong>
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,29 +1,32 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MealsResult } from '../Models/Meals';
-import { NutritionDetail } from '../Models/nutrition.details';
+import { MealDetail } from '../Models/meal-detail';
 import { Secret } from '../Models/secret';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MealsService {
+  //External API
+
+  // url2: string = `https://api.spoonacular.com/recipes`;
+  // url3: string = `https://api.spoonacular.com/recipes/search?apiKey=${Secret.apiKey}&includeNutrition=true&query=`;
+  url:string = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${Secret.apiKey}&addRecipeInformation=true&addRecipeNutrition=true&number=6&`
+
+  constructor(private http: HttpClient) {}
 
   
+//external API call
+  getMeals(Input: string): Observable<MealDetail> {
+    return this.http.get<MealDetail>(`${this.url}query=${Input}`);
+  }
 
- url2:string=`https://api.spoonacular.com/recipes`
- url:string=`https://api.spoonacular.com/recipes/search?apiKey=${Secret.apiKey}&includeNutrition=true&query=`;
- 
- constructor(private http: HttpClient) { }
+  getMealsCat(Cat: string): Observable<MealDetail> {
+    return this.http.get<MealDetail>(`${this.url}type=${Cat}`);
+  }
 
- getMeals(Input:string):Observable<MealsResult>{
-   return this.http.get<MealsResult>(`${this.url}${Input}&number=10`);
- }
-
-
- getDetails(id:number):Observable<NutritionDetail>{
-   return this.http.get<NutritionDetail>(`${this.url2}/${id}/nutritionWidget.json?apiKey=${Secret.apiKey}`)
- }
-
+  getMealsCatQuery(Cat:string, Input: string): Observable<MealDetail> {
+    return this.http.get<MealDetail>(`${this.url}type=${Cat}&query=${Input}`);
+  }
 }
